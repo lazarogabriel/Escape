@@ -29,8 +29,6 @@ namespace Assets.scripts.Menus
 
         void Update()
         {
-            Debug.Log(playerHealth.isDead);
-
             if (playerHealth.isDead == true)
             {
                 deadMenuUI.SetActive(true);
