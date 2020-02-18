@@ -24,7 +24,7 @@ namespace Assets.scripts.Entitys.Player
             player = GameObject.FindWithTag("Player");
             playerHealth = player.GetComponent<PlayerHealth>();
             playerTransfrom = player.transform;
-            velocity = 0.2f;
+            velocity = 20f;
         }
 
         void Update()
@@ -32,25 +32,13 @@ namespace Assets.scripts.Entitys.Player
 
             if (playerHealth.isDead == true) return;
 
-            if (Input.GetKey("left") || Input.GetKey("a") || joystick.Horizontal < 0f)
-            {
-                playerTransfrom.Translate(-velocity, 0, 0);
-            }
+            var horizontal = Input.GetAxis("Horizontal") == 0 ? joystick.Horizontal : Input.GetAxis("Horizontal");
+            var vertical = Input.GetAxis("Vertical") == 0 ? joystick.Vertical : Input.GetAxis("Vertical");
 
-            if (Input.GetKey("right") || Input.GetKey("d") || joystick.Horizontal > 0f)
-            {
-                playerTransfrom.Translate(velocity, 0, 0);
-            }
+            var vector = new Vector2(horizontal, vertical);
 
-            if (Input.GetKey("up") || Input.GetKey("w") || joystick.Vertical > 0f)
-            {
-                playerTransfrom.Translate(0, velocity, 0);
-            }
+            playerTransfrom.Translate(vector * velocity * Time.deltaTime);
 
-            if (Input.GetKey("down") || Input.GetKey("s") || joystick.Vertical < 0f)
-            {
-                playerTransfrom.Translate(0, -velocity, 0);
-            }
         }
 
         #endregion
